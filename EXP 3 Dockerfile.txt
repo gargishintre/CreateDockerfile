@@ -1,0 +1,49 @@
+EXP 3: Dockerfile
+
+VS Code:
+mkdir my-node-app
+cd my-node-app
+
+//app.js:
+console.log("Hello from inside a Docker container!");
+
+//Dockerfile
+# Use official Node.js image
+FROM node:14
+
+# Set working directory
+WORKDIR /app
+
+# Copy files into container
+COPY . .
+
+# No dependencies to install for now, but keep RUN for real apps
+RUN npm install || true
+
+# Command to run app
+CMD ["node", "app.js"]
+
+
+docker build -t my-node-app .
+docker run my-node-app
+
+---------------------------------------------------------------------------
+VS Code:
+mkdir my-webpage
+cd my-webpage
+
+//index.html
+<h1> Hello! I'm Gargi! </h1>
+
+//Dockerfile
+FROM nginx:latest
+
+COPY . /usr/share/nginx/html
+
+EXPORT 80
+
+CMD ["nginx", "-g", "daemon off;"]
+
+Terminal:
+docker build -t my-webpage .
+docker run -d -p 9090:80 mywebpage
